@@ -43,7 +43,7 @@
             this.blueFighterPic.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.blueFighterPic.Location = new System.Drawing.Point(12, 12);
             this.blueFighterPic.Name = "blueFighterPic";
-            this.blueFighterPic.Size = new System.Drawing.Size(264, 347);
+            this.blueFighterPic.Size = new System.Drawing.Size(300, 195);
             this.blueFighterPic.TabIndex = 0;
             this.blueFighterPic.TabStop = false;
             // 
@@ -51,15 +51,15 @@
             // 
             this.redFighterPic.BackColor = System.Drawing.Color.White;
             this.redFighterPic.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.redFighterPic.Location = new System.Drawing.Point(776, 12);
+            this.redFighterPic.Location = new System.Drawing.Point(575, 12);
             this.redFighterPic.Name = "redFighterPic";
-            this.redFighterPic.Size = new System.Drawing.Size(264, 347);
+            this.redFighterPic.Size = new System.Drawing.Size(300, 195);
             this.redFighterPic.TabIndex = 1;
             this.redFighterPic.TabStop = false;
             // 
             // startFightBtn
             // 
-            this.startFightBtn.Location = new System.Drawing.Point(448, 467);
+            this.startFightBtn.Location = new System.Drawing.Point(391, 213);
             this.startFightBtn.Name = "startFightBtn";
             this.startFightBtn.Size = new System.Drawing.Size(75, 23);
             this.startFightBtn.TabIndex = 2;
@@ -70,24 +70,26 @@
             // blueFighterCbx
             // 
             this.blueFighterCbx.FormattingEnabled = true;
-            this.blueFighterCbx.Location = new System.Drawing.Point(12, 365);
+            this.blueFighterCbx.Location = new System.Drawing.Point(12, 213);
             this.blueFighterCbx.Name = "blueFighterCbx";
-            this.blueFighterCbx.Size = new System.Drawing.Size(264, 21);
+            this.blueFighterCbx.Size = new System.Drawing.Size(300, 21);
             this.blueFighterCbx.TabIndex = 3;
+            this.blueFighterCbx.SelectedIndexChanged += new System.EventHandler(this.blueFighterCbx_SelectedIndexChanged);
+            this.blueFighterCbx.Click += new System.EventHandler(this.blueFighterCbx_Click);
             // 
             // redFighterCbx
             // 
             this.redFighterCbx.FormattingEnabled = true;
-            this.redFighterCbx.Location = new System.Drawing.Point(776, 366);
+            this.redFighterCbx.Location = new System.Drawing.Point(575, 213);
             this.redFighterCbx.Name = "redFighterCbx";
-            this.redFighterCbx.Size = new System.Drawing.Size(264, 21);
+            this.redFighterCbx.Size = new System.Drawing.Size(300, 21);
             this.redFighterCbx.TabIndex = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1052, 701);
+            this.ClientSize = new System.Drawing.Size(890, 627);
             this.Controls.Add(this.redFighterCbx);
             this.Controls.Add(this.blueFighterCbx);
             this.Controls.Add(this.startFightBtn);
