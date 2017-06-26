@@ -1,0 +1,15 @@
+c:\users\daniel\documents\visual studio 2015\Projects\UFC_Prediction\UFC_Prediction\bin\Debug\UFC_Prediction.exe.config
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\UFC_Prediction\UFC_Prediction\obj\Debug\UFC_Prediction.csprojResolveAssemblyReference.cache
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\UFC_Prediction\UFC_Prediction\obj\Debug\UFC_Prediction.Properties.Resources.resources
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\UFC_Prediction\UFC_Prediction\obj\Debug\UFC_Prediction.csproj.GenerateResource.Cache
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\UFC_Prediction\UFC_Prediction\bin\Debug\UFC_Prediction.exe
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\UFC_Prediction\UFC_Prediction\bin\Debug\UFC_Prediction.pdb
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\UFC_Prediction\UFC_Prediction\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\UFC_Prediction\UFC_Prediction\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\UFC_Prediction\UFC_Prediction\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\UFC_Prediction\UFC_Prediction\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\UFC_Prediction\UFC_Prediction\obj\Debug\UFC_Prediction.exe
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\UFC_Prediction\UFC_Prediction\obj\Debug\UFC_Prediction.pdb
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\UFC_Prediction\UFC_Prediction\obj\Debug\UFC_Prediction.Form1.resources
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\UFC_Prediction\UFC_Prediction\bin\Debug\FileHelpers.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\UFC_Prediction\UFC_Prediction\bin\Debug\FileHelpers.xml
