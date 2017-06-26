@@ -98,7 +98,7 @@
             // 
             this.winningLabel.AutoSize = true;
             this.winningLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.winningLabel.Location = new System.Drawing.Point(432, 114);
+            this.winningLabel.Location = new System.Drawing.Point(415, 115);
             this.winningLabel.Name = "winningLabel";
             this.winningLabel.Size = new System.Drawing.Size(31, 20);
             this.winningLabel.TabIndex = 5;
@@ -129,6 +129,7 @@
             // 
             // blueFightNm
             // 
+            this.blueFightNm.Enabled = false;
             this.blueFightNm.FormattingEnabled = true;
             this.blueFightNm.Location = new System.Drawing.Point(15, 269);
             this.blueFightNm.Name = "blueFightNm";
@@ -137,6 +138,7 @@
             // 
             // redFightNm
             // 
+            this.redFightNm.Enabled = false;
             this.redFightNm.FormattingEnabled = true;
             this.redFightNm.Location = new System.Drawing.Point(757, 269);
             this.redFightNm.Name = "redFightNm";
