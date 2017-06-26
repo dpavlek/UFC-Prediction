@@ -21,14 +21,9 @@ namespace CallRequestResponseService
         public string[,] Values { get; set; }
     }
 
-    class Program
+    class Azure
     {
-        static void Main(string[] args)
-        {
-            InvokeRequestResponseService().Wait();
-        }
-
-        static async Task InvokeRequestResponseService()
+        static public async Task InvokeRequestResponseService()
         {
             using (var client = new HttpClient())
             {
@@ -49,7 +44,7 @@ namespace CallRequestResponseService
                     {
                     }
                 };
-                const string apiKey = "abc123"; // Replace this with the API key for the web service
+                const string apiKey = "FsV6rOdchVMe4RKpBC3b6Z71dhhe93ZRHkSyPAfLz5a7ZRHfelFSDwxx009PSSyBrPd9z/lhbjWt9tAz2jJ6tg=="; // Replace this with the API key for the web service
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
 
                 client.BaseAddress = new Uri("https://ussouthcentral.services.azureml.net/workspaces/c94741a71fa04f8cbacf633756db6c41/services/58be69c488af45a9b5ab6d5a7b1de255/execute?api-version=2.0&details=true");
@@ -62,7 +57,7 @@ namespace CallRequestResponseService
                 //      result = await DoSomeTask().ConfigureAwait(false)
 
 
-                HttpResponseMessage response = await client.PostAsJsonAsync("", scoreRequest);
+                HttpResponseMessage response = await client.PostAsJsonAsync("", scoreRequest).ConfigureAwait(false);
 
                 if (response.IsSuccessStatusCode)
                 {
