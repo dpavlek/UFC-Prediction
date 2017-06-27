@@ -6,15 +6,18 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.IO;
 using System.Linq;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace UFC_Prediction
 {
 
     public partial class Form1 : Form
     {
-
         List<string> fighterList = new List<string>();
-        string[][] fighterData;
+        string[][] fighterData,fighterInfo;
+        double money = 1000;
+        string bettingHorse;
 
         public Form1()
         {
@@ -24,6 +27,9 @@ namespace UFC_Prediction
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            winningLabel.Visible = false;
+            percentLbl.Visible = false;
+
             using (var fs = File.OpenRead(@"../../DataFiles/fighters.csv"))
             using (var reader = new StreamReader(fs))
             {
@@ -33,6 +39,7 @@ namespace UFC_Prediction
                     fighterList.Add(line);
                 }
             }
+
             foreach (string fighter in fighterList)
             {
                 blueFighterCbx.Items.Add(fighter);
@@ -41,11 +48,18 @@ namespace UFC_Prediction
 
             var filePath = @"../../DataFiles/fighter_data.csv";
             fighterData = File.ReadLines(filePath).Select(x => x.Split(';')).ToArray();
-    }
+
+            filePath = @"../../DataFiles/ufc_fighters_info.csv";
+            fighterInfo = File.ReadLines(filePath).Select(x => x.Split(',')).ToArray();
+        }
 
         private void startFightBtn_Click(object sender, EventArgs e)
         {
+            string winner = "";
+            bettingBox.Enabled = false;
+            setBet();
             winningLabel.Text = "Fighting...";
+            winningLabel.Visible = true;
             startFightBtn.Enabled = false;
             StringTable inputValues = new StringTable()
             {
@@ -107,20 +121,69 @@ namespace UFC_Prediction
             {
                 Console.Write(element + " ");
             }
+
             string[] fightResult = InvokeRequestResponseService(inputValues).Result;
+
             if (fightResult[fightResult.Length - 2].Contains("red"))
             {
                 winningLabel.Text = "Red Player Wins";
+                winner = "red";
             }
             else if (fightResult[fightResult.Length - 2].Contains("blue"))
             {
                 winningLabel.Text = "Blue Player Wins";
+                winner = "blue";
             }
+            var percentageFight = Regex.Match(fightResult[fightResult.Length - 1], @"([-+]?[0-9]*\.?[0-9]+)").Value;
+            percentageFight = percentageFight.Substring(0, 5);
+            float percentageFightFloat;
+            float.TryParse(percentageFight, out percentageFightFloat);
+            percentageFightFloat /= 10;
+            if (percentageFightFloat < 50)
+            {
+                percentageFightFloat = 100 - percentageFightFloat;
+            }
+            percentLbl.Text = percentageFightFloat.ToString() + "%";
+            percentLbl.Visible = true;
             startFightBtn.Enabled = true;
+            getBet(winner, percentageFightFloat);
+            bettingBox.Enabled = true;
+        }
+
+        private void setBet()
+        {
+            money = money - (double)fighterBetBox.Value;
+            moneyBox.Text = money.ToString() + "$";
+            if (blueFighterRadio.Checked)
+            {
+                bettingHorse = "blue";
+            }
+            else if (redFighterRadio.Checked)
+            {
+                bettingHorse = "red";
+            }
+        }
+
+        private void getBet(string winner, float coefficient)
+        {
+            double moneyWon = 0;
+            if(winner == "blue" && bettingHorse == "blue")
+            {
+                moneyWon = (double)fighterBetBox.Value*(100/coefficient);
+            }
+            else if(winner == "red" && bettingHorse == "red")
+            {
+                moneyWon = (double)fighterBetBox.Value * (100 / coefficient);
+            }
+            money = money + moneyWon;
+            moneyBox.Text = money.ToString(".0") + "$";
+            fighterBetBox.Maximum = (decimal)money;
         }
 
         private void blueFighterCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
+            winningLabel.Visible = false;
+            percentLbl.Visible = false;
             blueFightNm.Items.Clear();
             string BlueFighter = blueFighterCbx.Text;
             string[] blueFighterName = BlueFighter.Split(' ');
@@ -153,7 +216,22 @@ namespace UFC_Prediction
                     blueFightNm.Items.Add(blueFighterFights.ToString());
                 }
             }
-                blueFightNm.Enabled = true;
+            blueFighterInfo.Clear();
+            for (int i = 0; i < fighterInfo.GetLength(0); i++)
+            {
+                if (fighterInfo[i][2].Contains(BlueFighter))
+                {
+                    blueFighterInfo.AppendText("Nickname: " + fighterInfo[i][3] + System.Environment.NewLine);
+                    blueFighterInfo.AppendText("Birth: " + fighterInfo[i][4] + System.Environment.NewLine);
+                    blueFighterInfo.AppendText("Height: " + fighterInfo[i][5] + " in" + System.Environment.NewLine);
+                    blueFighterInfo.AppendText("Weight: " + fighterInfo[i][6] + " lbs" + System.Environment.NewLine);
+                    blueFighterInfo.AppendText("Association: " + fighterInfo[i][7] + System.Environment.NewLine);
+                    blueFighterInfo.AppendText("Class: " + fighterInfo[i][8] + System.Environment.NewLine);
+                    blueFighterInfo.AppendText("Locality: " + fighterInfo[i][9] + System.Environment.NewLine);
+                    blueFighterInfo.AppendText("Country: " + fighterInfo[i][10] + System.Environment.NewLine);
+                }
+            }
+            blueFightNm.Enabled = true;
             blueFightNm.SelectedIndex = 0;
             if (redFighterCbx.Text != "")
             {
@@ -225,8 +303,15 @@ namespace UFC_Prediction
             public string[,] Values { get; set; }
         }
 
+        private void fighterBetBox_ValueChanged(object sender, EventArgs e)
+        {
+            fighterBetBox.Maximum = (decimal)money;
+        }
+
         private void redFighterCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
+            winningLabel.Visible = false;
+            percentLbl.Visible = false;
             redFightNm.Items.Clear();
             string RedFighter = redFighterCbx.Text;
             string[] redFighterName = RedFighter.Split(' ');
@@ -251,6 +336,21 @@ namespace UFC_Prediction
                 redFighterPic.BackColor = System.Drawing.Color.Red;
             }
             var redFighterFights = 0;
+            redFighterInfo.Clear();
+            for (int i = 0; i < fighterInfo.GetLength(0); i++)
+            {
+                if (fighterInfo[i][2].Contains(RedFighter))
+                {
+                    redFighterInfo.AppendText("Nickname: " + fighterInfo[i][3] + System.Environment.NewLine);
+                    redFighterInfo.AppendText("Birth: " + fighterInfo[i][4] + System.Environment.NewLine);
+                    redFighterInfo.AppendText("Height: " + fighterInfo[i][5] + " in" + System.Environment.NewLine);
+                    redFighterInfo.AppendText("Weight: " + fighterInfo[i][6] + " lbs" + System.Environment.NewLine);
+                    redFighterInfo.AppendText("Association: " + fighterInfo[i][7] + System.Environment.NewLine);
+                    redFighterInfo.AppendText("Class: " + fighterInfo[i][8] + System.Environment.NewLine);
+                    redFighterInfo.AppendText("Locality: " + fighterInfo[i][9] + System.Environment.NewLine);
+                    redFighterInfo.AppendText("Country: " + fighterInfo[i][10] + System.Environment.NewLine);
+                }
+            }
             for (int i = 0; i < fighterData.GetLength(0); i++)
             {
                 if (fighterData[i][4].Contains(RedFighter))
@@ -259,8 +359,11 @@ namespace UFC_Prediction
                     redFightNm.Items.Add(redFighterFights.ToString());
                 }
             }
-            redFightNm.Enabled = true;
-            redFightNm.SelectedIndex = 0;
+            if (redFighterFights > 0)
+            {
+                redFightNm.Enabled = true;
+                redFightNm.SelectedIndex = 0;
+            }
             if(blueFighterCbx.Text != "")
             {
                 startFightBtn.Enabled = true;
